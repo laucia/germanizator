@@ -3,7 +3,7 @@
 A terrible library to transform english into phonetic german.
 
 This uses an API wrapper to [lingorado](http://lingorado.com/ipa) to get the IPA from english.
-We would like to make this self-contained in a forseeable future.
+Making this self-contained is a WIP.
 
 ## Sample Output
 
