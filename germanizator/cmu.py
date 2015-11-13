@@ -1,5 +1,6 @@
 import random
 from nltk.corpus import cmudict
+from nltk.tokenize import word_tokenize
 
 from .germanification import cleanup_german
 
@@ -49,10 +50,20 @@ ARPABET_TO_GERMAN = {
     "ZH": "g",
 }
 
+def word_splitter(text):
+    tokens = word_tokenize(text)
+    merged_token = []
+    for token in tokens:
+        if token == "n't" and merged_token:
+            merged_token[-1] += token
+        else:
+            merged_token.append(token)
+
+    return merged_token
 
 
 def procedure(text):
-    words = text.split(" ")
+    words = word_splitter(text)
 
     prononciations = []
 
@@ -75,7 +86,7 @@ def arpabetizer(word):
     if arpabets:
         arpabet = random.choice(arpabets)
     else:
-        arpabet = "(" + word + ")"
+        arpabet = word
 
     return arpabet
 
@@ -91,5 +102,8 @@ def germanizer(arpabet):
     current = []
     for phone in arpabet:
         # for now disregard intonations
-        current.append(ARPABET_TO_GERMAN.get(phone, ARPABET_TO_GERMAN.get(phone[:-1])))
+        current.append(ARPABET_TO_GERMAN.get(
+            phone,
+            ARPABET_TO_GERMAN.get(phone[:-1]),
+        ))
     return ''.join(current)
