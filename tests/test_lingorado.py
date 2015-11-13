@@ -1,7 +1,6 @@
-from germanizator.en2de import english_to_ipa
-from germanizator.en2de import ipa_to_german
-from germanizator.en2de import cleanup_german
-
+from germanizator.lingorado import english_to_ipa
+from germanizator.lingorado import ipa_to_german
+from germanizator.germanification import cleanup_german
 
 
 def print_parts(phrase):

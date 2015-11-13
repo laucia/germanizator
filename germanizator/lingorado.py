@@ -2,7 +2,7 @@ from lxml import html
 import requests
 import re
 import random
-from .germanification import germanifications
+from .germanification import cleanup_german
 
 
 IPA_TO_GERMAN = {
@@ -85,20 +85,6 @@ def ipa_to_german(word):
         for symbol in symbols
     ]
     return "".join(letters)
-
-
-space_before_punctuation = re.compile(r'( )+([.,?!;])')
-two_spaces = re.compile(r'  ')  # weird space-like character
-
-
-def cleanup_german(phrase):
-    result = phrase
-    for _, regexp, replacement in germanifications:
-        result = regexp.sub(replacement, result)
-    # Redo punctuation
-    result = space_before_punctuation.sub(r'\2', result)
-    result = two_spaces.sub(r' ', result)
-    return result
 
 
 def english_to_deutsch(sentence):

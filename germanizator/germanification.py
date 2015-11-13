@@ -72,3 +72,15 @@ germanifications = [
         r'pel',
     ),
 ]
+
+space_before_punctuation = re.compile(r'( )+([.,?!;])')
+two_spaces = re.compile(r'  ')  # weird space-like character
+
+def cleanup_german(phrase):
+    result = phrase
+    for _, regexp, replacement in germanifications:
+        result = regexp.sub(replacement, result)
+    # Redo punctuation
+    result = space_before_punctuation.sub(r'\2', result)
+    result = two_spaces.sub(r' ', result)
+    return result
